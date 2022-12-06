@@ -49,6 +49,7 @@ class SessionPrioritizationMiddleware : Middleware<BrowserState, BrowserAction> 
             is TabListAction,
             is EngineAction.LinkEngineSessionAction,
             -> {
+                logger.info("")
                 val state = context.state
                 if (previousHighestPriorityTabId != state.selectedTabId) {
                     updatePriorityIfNeeded(state)
