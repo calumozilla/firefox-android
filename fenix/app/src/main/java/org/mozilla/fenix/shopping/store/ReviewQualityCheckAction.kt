@@ -159,6 +159,15 @@ sealed interface ReviewQualityCheckAction : Action {
     ) : TelemetryAction
 
     /**
+     * Triggered when an ad is fetched.
+     *
+     * @property productAid The product's aid.
+     */
+    data class RecommendedProductPlacement(
+        val productAid: String,
+    ) : TelemetryAction
+
+    /**
      * Triggered when the user clicks on learn more link on the explainer card.
      */
     object OpenExplainerLearnMoreLink : NavigationMiddlewareAction, TelemetryAction

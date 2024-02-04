@@ -140,6 +140,7 @@ class DefaultReviewQualityCheckService(
                                         Shopping.surfaceNoAdsAvailable.record()
                                     }
                                 } else {
+                                    // todo call RQCAction RecommendedProductPlacement
                                     Shopping.adsExposure.record()
                                 }
                                 // Return the first available recommendation since ui requires only

@@ -176,6 +176,12 @@ class ReviewQualityCheckTelemetryMiddleware(
                 }
             }
 
+            is ReviewQualityCheckAction.RecommendedProductPlacement -> {
+                scope.launch {
+                    telemetryService.recordRecommendedProductPlacement(action.productAid)
+                }
+            }
+
             ReviewQualityCheckAction.ToggleProductRecommendation -> {
                 val state = store.state
                 if (state is ReviewQualityCheckState.OptedIn &&

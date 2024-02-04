@@ -26,6 +26,11 @@ interface ReviewQualityCheckTelemetryService {
      * Sends an impression attribution event for a given product aid.
      */
     suspend fun recordRecommendedProductImpression(productAid: String): Unit?
+
+    /**
+     * Sends a placement attribution event for a given product aid.
+     */
+    suspend fun recordRecommendedProductPlacement(productAid: String): Unit?
 }
 
 /**
@@ -65,6 +70,22 @@ class DefaultReviewQualityCheckTelemetryService(
                     },
                     onException = {
                         logger.error("Error sending impression attribution event", it)
+                        continuation.resume(null)
+                    },
+                )
+            }
+        }
+
+    override suspend fun recordRecommendedProductPlacement(productAid: String) =
+        withContext(Dispatchers.Main) {
+            suspendCoroutine { continuation ->
+                browserStore.state.selectedTab?.engineState?.engineSession?.sendPlacementAttributionEvent(
+                    aid = productAid,
+                    onResult = {
+                        continuation.resume(Unit)
+                    },
+                    onException = {
+                        logger.error("Error sending placement attribution event", it)
                         continuation.resume(null)
                     },
                 )
